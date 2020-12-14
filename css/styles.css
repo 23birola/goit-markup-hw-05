@@ -2,6 +2,7 @@
   --main-color: #212121;
   --accent-color: #2196f3;
   --secondary-color: #757575;
+  --timing-fn: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -89,24 +90,39 @@ header {
   margin-right: 50px;
 }
 
-.site-nav-item {
+.site-nav-link {
+  display: block;
+  position: relative;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.14;
   letter-spacing: 0.02em;
   color: var(--main-color);
+
+  transition: color 250ms var(--timing-fn);
 }
 
-.site-nav-item:hover,
-.site-nav-item:focus,
+.site-nav-link:hover,
+.site-nav-link:focus,
 .contacts-list-item:hover,
 .contacts-list-item:focus,
 .adress-item:hover,
 .adress-item:focus,
 .adress-item.location:hover,
 .adress-item.location:focus,
-.site-nav-item.current {
+.site-nav-link.current {
   color: var(--accent-color);
+}
+
+.site-nav-link.current::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -33px;
+  background-color: var(--accent-color);
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
 }
 
 .header .contacts-list {
@@ -128,6 +144,8 @@ header {
   line-height: 1.14;
   letter-spacing: 0.02em;
   color: var(--secondary-color);
+
+  transition: color 250ms var(--timing-fn);
 }
 
 .contact-icon {
@@ -263,6 +281,30 @@ header {
   display: flex;
   justify-content: space-between;
 }
+
+.sevices-item {
+  position: relative;
+}
+
+.services-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  text-align: center;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+  background-color: rgba(47, 48, 58, 0.8);
+}
+
 /* ========End Services======================= */
 
 /* ========Team=========================== */
@@ -322,10 +364,14 @@ header {
   height: 44px;
   border-radius: 50%;
   background-color: #ffffff;
+
+  transition: background-color 250ms var(--timing-fn);
 }
 
 .social-links-icon {
   fill: #afb1b8;
+
+  transition: fill 250ms var(--timing-fn);
 }
 
 .social-links-link:hover .social-links-icon,
@@ -356,10 +402,17 @@ header {
   height: 90px;
   border: 1px solid #afb1b8;
   border-radius: 4px;
+  transition: border 250ms var(--timing-fn);
 }
 
 .client-icon {
   fill: #afb1b8;
+  transition: fill 250ms var(--timing-fn);
+}
+
+.client-link:hover,
+.client-link:focus {
+  border: 1px solid var(--accent-color);
 }
 
 .client-link:hover .client-icon,
@@ -462,6 +515,8 @@ address {
   text-align: center;
   letter-spacing: 0.03em;
   color: var(--main-color);
+
+  transition: color 250ms var(--timing-fn), background-color 250ms var(--timing-fn), box-shadow 250ms var(--timing-fn);
 }
 
 .filter-item:hover,
@@ -470,6 +525,7 @@ address {
   background-color: var(--accent-color);
   cursor: pointer;
   outline: none;
+  box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12);
 }
 
 .cards-list {
@@ -486,9 +542,44 @@ address {
   background: #ffffff;
 }
 
-.card-item:hover {
+.card-item-img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  font-weight: 400px;
+  font-size: 18px;
+  line-height: 1.56;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  background: rgba(33, 150, 243, 0.9);
+  padding: 63px 24px;
+
+  transform: translateY(100%);
+  transition: transform 250ms var(--timing-fn);
+}
+
+.card-item-link {
+  display: block;
+  transition: box-shadow 250ms var(--timing-fn);
+}
+
+.card-item-link:hover,
+.card-item-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06), 1px 4px 6px rgba(0, 0, 0, 0.16);
 }
+.card-item-link:hover .overlay,
+.card-item-link:focus .overlay {
+  transform: translateY(0%);
+}
+
 .card-item-text {
   padding-top: 20px;
   border: 1px solid #eeeeee;
@@ -514,4 +605,47 @@ address {
   letter-spacing: 0.03em;
   color: var(--secondary-color);
 }
-/* ========End Portfolio======================= */ ;
+/* ========End Portfolio======================= */
+
+/* ========Modal======================= */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: all 250ms var(--timing-fn);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 528px;
+  min-height: 521px;
+  background-color: #ffffff;
+  transform: translate(-50%, -50%);
+}
+
+.close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* ========End Modal======================= */
